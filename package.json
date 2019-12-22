@@ -9,7 +9,8 @@
     "client-install": "cd client && npm install",
     "client": "npm start --prefix client",
     "server": "node server.js",
-    "start": "concurrently \"npm run server\" \" npm run client \""
+    "start": "node server.js",
+    "dev": "concurrently \"npm run server\" \" npm run client \""
   },
   "repository": {
     "type": "git",
