@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 require('dotenv').config();
 const mongoose = require('mongoose');
-
+const cors = require('cors');
 const PORT = process.env.PORT || 8000;
 
 mongoose.Promise.global;
@@ -11,8 +11,10 @@ mongoose.connect(uri,{useNewUrlParser:true,useUnifiedTopology:true,useFindAndMod
 const connection = mongoose.connection;
 connection.on('error',console.error.bind(console,'connextion error'))
 connection.once('open',() => {
-    console.log('connection established');
+    console.log('Mongo Server Running On ATLAS');
 });
+
+app.use(cors());
 
 app.listen(PORT,() => {
     console.log(`Node Servr Running On PORT: ${PORT}`);
