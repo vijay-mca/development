@@ -4,7 +4,8 @@
   "description": "cloud based application",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -19,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/vijay-mca/development/issues"
   },
-  "homepage": "https://github.com/vijay-mca/development#readme"
+  "homepage": "https://github.com/vijay-mca/development#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  }
 }
