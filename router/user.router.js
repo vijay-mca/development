@@ -20,9 +20,9 @@ router.post('/save', (req,res) => {
 
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(req.body.password, salt, (err, hash) => {
-            eq.body.password = hash;
+            req.body.password = hash;
             saveUser.save()
-                    .then(() => {console.log(hash);res.json("user Saved")})
+                    .then(() => {res.json("user Saved")})
                     .catch(err => {res.status(404).json('Error: ' + err) });
         })
     });
