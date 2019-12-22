@@ -22,7 +22,7 @@ router.post('/save', (req,res) => {
         bcrypt.hash(req.body.password, salt, (err, hash) => {
             req.body.password = hash;
             saveUser.save()
-                    .then(() => {res.json("user Saved")})
+                    .then(() => {res.json("Succefully Created")})
                     .catch(err => {res.status(404).json('Error: ' + err) });
         })
     });

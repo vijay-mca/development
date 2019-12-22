@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Alert } from 'reactstrap';
 
 export default class SignIn extends Component {
     constructor(props){
@@ -11,6 +12,8 @@ export default class SignIn extends Component {
             mobile:'',
             password:'' ,
             confirmpassword:'' ,
+            message:'' ,
+            error:false,
             users:[]
         }
         this.onChangeFirstName = this.onChangeFirstName.bind(this);
@@ -70,8 +73,18 @@ export default class SignIn extends Component {
                 mobile:this.state.mobile ,
                 password:this.state.password
             }
-          });
-    }
+          })
+            .then(res =>{ 
+                    this.setState({
+                        message: res.data
+                    });
+            })
+            .catch(err =>{
+                this.setState({
+                    message: err
+                });
+            });
+        }
 
     render() {
         let {firstname, lastname, email, mobile, password, confirmpassword} = this.state;
@@ -121,6 +134,12 @@ export default class SignIn extends Component {
                             <button type="submit" className="btn btn-primary">Save</button>
                         </div>
                     </div>
+                    {this.state.message?(
+                        <Alert color="success">
+                            {this.state.message}
+                        </Alert>
+                    ):""
+                    }
                 </form>
             </div>
         )
