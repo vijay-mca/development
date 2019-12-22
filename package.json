@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/vijay-mca/development#readme",
   "dependencies": {
+    "bcrypt": "^3.0.7",
     "concurrently": "^5.0.2",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",

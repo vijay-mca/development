@@ -3,7 +3,8 @@ const app = express();
 require('dotenv').config();
 const mongoose = require('mongoose');
 const cors = require('cors');
-const PORT = process.env.PORT || 8000;
+const path = require('path');
+const PORT = process.env.PORT || 5000;
 
 mongoose.Promise.global;
 const uri = process.env.ATLAS_URI || 'mongodb+srv://vijay:vijay-mongo@cluster0-x42br.gcp.mongodb.net/test?retryWrites=true&w=majority';
@@ -15,6 +16,12 @@ connection.once('open',() => {
 });
 
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({extended:false}));
+
+const userRouter = require('./router/user.router');
+
+app.use('/user',userRouter);
 
 app.listen(PORT,() => {
     console.log(`Node Server Running On PORT: ${PORT}`);
