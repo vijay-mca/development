@@ -79,9 +79,8 @@ export default class SignIn extends Component {
                     });
             })
             .catch(err =>{
-                this.setState({
-                    message: err
-                });
+                console.log(err);
+                
             });
         }
 

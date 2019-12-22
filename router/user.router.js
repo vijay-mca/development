@@ -10,22 +10,21 @@ router.get('/', (req,res) =>{
 });
 
 router.post('/save', (req,res) => {
-    const saveUser = new User({
-        firstname:req.body.firstname ,
-        lastname:req.body.lastname ,
-        email:req.body.email ,
-        mobile:req.body.mobile ,
-        password:req.body.password
-    });
-
-    bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(req.body.password, salt, (err, hash) => {
-            req.body.password = hash;
-            saveUser.save()
-                    .then(() => {console.log(req.body.password);res.json("Succefully Created")})
-                    .catch(err => {res.status(404).json('Error: ' + err) });
-        })
-    });
+    bcrypt.hash(req.body.password, 10, (err,   hash) => {
+        User.create({
+            firstname:req.body.firstname ,
+            lastname:req.body.lastname ,
+            email:req.body.email ,
+            mobile:req.body.mobile ,
+            password: hash
+          }).then(data => {
+           if (data) {
+           res.json("User Saved");
+           }
+         }).catch(err => {
+            res.json(err);
+         });
+        });
 
 });
 module.exports = router;
