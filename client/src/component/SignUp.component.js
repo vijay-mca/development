@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Alert } from 'reactstrap';
 
 export default class SignIn extends Component {
     constructor(props){
@@ -135,9 +134,9 @@ export default class SignIn extends Component {
                         </div>
                     </div>
                     {this.state.message?(
-                        <Alert color="success">
-                            {this.state.message}
-                        </Alert>
+                        <div className="alert alert-success" role="alert">
+                            <strong>{this.state.message}</strong>
+                        </div>
                     ):""
                     }
                 </form>
