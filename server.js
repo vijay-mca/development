@@ -17,5 +17,5 @@ connection.once('open',() => {
 app.use(cors());
 
 app.listen(PORT,() => {
-    console.log(`Node Servr Running On PORT: ${PORT}`);
+    console.log(`Node Server Running On PORT: ${PORT}`);
 });
