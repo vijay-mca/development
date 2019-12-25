@@ -4,6 +4,8 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 const PORT = process.env.PORT || 5000;
 
 mongoose.Promise.global;
@@ -19,13 +21,16 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
+app.use(require('express-session')({ secret: 'vijay', resave: false, saveUninitialized: false }));
+app.use(passport.initialize());
+app.use(passport.session());
+
 const userRouter = require('./router/user.router');
 
-app.use('/user',userRouter);
+app.use('/users',userRouter);
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
-
     app.get('*', (req, res) => {
         res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
     });

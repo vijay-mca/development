@@ -8,6 +8,7 @@ import Home from './component/Home.component';
 import About from './component/About.component';
 import SignIn from './component/SignIn.component';
 import SignUp from './component/SignUp.component';
+import DashBoard from './component/UserDashBoard.component';
 function App() {
   return (
     <Router>
@@ -17,6 +18,7 @@ function App() {
       <Route path="/About" component={About}></Route>
       <Route path="/SignIn" component={SignIn}></Route>
       <Route path="/SignUp" component={SignUp}></Route>
+      <Route path="/DashBoard" component={DashBoard}></Route>
     </Router>
   );
 }

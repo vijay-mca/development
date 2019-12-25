@@ -27,6 +27,11 @@
   vertical-align: middle;
   font-size: 70px;
 }
+.eye{
+  position: absolute;
+  top: 35px;
+  left: 98%;
+}
 .footer{
   box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
   padding: 20px;
