@@ -21,11 +21,7 @@ app.use(express.urlencoded({extended:false}));
 
 const userRouter = require('./router/user.router');
 
-app.get('/',(req,res)=>{
-    console.log("Welcome to My Website");
-    const client=path.join(__dirname, 'client', 'build', 'index.html');
-    res.sendFile(client);
-});
+app.use('/user',userRouter);
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
@@ -34,8 +30,6 @@ if (process.env.NODE_ENV === 'production') {
         res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
     });
 }
-
-app.use('/user',userRouter);
 
 app.listen(PORT,() => {
     console.log(`Node Server Running On PORT: ${PORT}`);
