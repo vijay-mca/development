@@ -30,7 +30,7 @@ router.post("/login",(req, res) => {
                     result.status = status;
                     result.error = `Authentication error`;
                   }
-                  res.json(result);
+                  res. send(result).json(result);
                 }).catch(err => {
                   status = 500;
                   result.status = status;
