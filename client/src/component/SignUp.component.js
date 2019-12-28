@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {FormControl,Avatar,Button,CssBaseline,TextField,FormControlLabel,Checkbox,Grid,Box,Typography,Container} from '@material-ui/core';
+import {Button,CssBaseline,TextField,FormControlLabel,Checkbox,Grid,Box,Typography,Container} from '@material-ui/core';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 function Copyright() {

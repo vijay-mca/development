@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
@@ -11,6 +10,7 @@ import SignUp from './component/SignUp.component';
 import DashBoard from './component/UserDashBoard.component';
 function App() {
   return (
+    <div>
     <Router>
       <Navbar />
       <Route path="/" exact component={Home}></Route>
@@ -20,6 +20,7 @@ function App() {
       <Route path="/SignUp" component={SignUp}></Route>
       <Route path="/DashBoard" component={DashBoard}></Route>
     </Router>
+    </div>
   );
 }
 

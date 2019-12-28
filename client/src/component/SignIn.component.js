@@ -1,5 +1,4 @@
 import React,{Component} from 'react';
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -8,7 +7,6 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
@@ -77,29 +75,29 @@ export default class SignIn extends Component {
     onSubmit = () =>{
       const isValid = this.validate();
       if(!isValid){
-      axios({
+      return axios({
         method:"POST",
         url:'users/login' ,
         data:{
           email:this.state.email ,
           password: this.state.password
         }
-      }).then(res =>{ 
-        
+      }).then(res =>{
         if (res.data.status === 404) {
           console.log(res.data.status);
           this.setState({
             message: res.data.error ,
             status: res.data.status
           })
-        } else if(res.data.status === 401) {
+        } else if(res.data.status === 400) {
           this.setState({
             message: res.data.error ,
             status: res.data.status
           })
         }
-        else{
-          //window.location='/DashBoard';
+        else if(res.data.status === 200){
+          localStorage.setItem('usertoken', res.data.token)
+          window.location=`/DashBoard`;
         }
       }).catch(err =>{
         console.log(err);
@@ -118,7 +116,7 @@ export default class SignIn extends Component {
           </Typography>
       } else if(this.state.status === 401) {
           message = <Typography component="div">
-          <Box textAlign="justify" style={{color:"white",backgroundColor:"green"}}>
+          <Box textAlign="justify" style={{color:"white",backgroundColor:"red"}}>
           {this.state.message}
           </Box>
           </Typography>
