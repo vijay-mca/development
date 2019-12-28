@@ -114,7 +114,7 @@ export default class SignIn extends Component {
             {this.state.message}
           </Box>
           </Typography>
-      } else if(this.state.status === 401) {
+      } else if(this.state.status === 400) {
           message = <Typography component="div">
           <Box textAlign="justify" style={{color:"white",backgroundColor:"red"}}>
           {this.state.message}
