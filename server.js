@@ -35,9 +35,9 @@ const opts = {
 
 const strategy = new JwtStrategy(opts, (payload, next) => {
     User.findOne({_id: payload.id })
-        .then(res => {
-            next(null, res);
-            });
+    .then(res => {
+        next(null, res);
+    });
     });
 passport.use(strategy);
 app.use(passport.initialize());
