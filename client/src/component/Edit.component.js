@@ -3,9 +3,6 @@ import {
   Button,
   CssBaseline,
   TextField,
-  FormControlLabel,
-  Checkbox,
-  Grid,
   Box,
   Typography,
   Container
@@ -26,33 +23,50 @@ export default class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: "",
-      lastName: "",
+      firstname: "",
+      lastname: "",
       email: "",
-      mobile: "",
-      password: "",
-      passwordError: "",
-      confirmPassword: "",
+      mobile: 0,
+      message: "",
       users: []
     };
-    this.onChangefirstName = this.onChangefirstName.bind(this);
-    this.onChangelastName = this.onChangelastName.bind(this);
+    this.onChangefirstname = this.onChangefirstname.bind(this);
+    this.onChangelastname = this.onChangelastname.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangeMobile = this.onChangeMobile.bind(this);
-    this.onChangePassword = this.onChangePassword.bind(this);
-    this.onChangeconfirmPassword = this.onChangeconfirmPassword.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  onChangefirstName = e => {
+  componentDidMount = () => {
+    axios({
+      method: "GET",
+      url: "/users",
+      headers: {
+        token: localStorage.getItem("usertoken")
+      }
+    })
+      .then(res => {
+        this.setState({
+          firstname: res.data.user.firstname,
+          lastname: res.data.user.lastname,
+          email: res.data.user.email,
+          mobile: String(res.data.user.mobile)
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  onChangefirstname = e => {
     this.setState({
-      firstName: e.target.value
+      firstname: e.target.value
     });
   };
 
-  onChangelastName = e => {
+  onChangelastname = e => {
     this.setState({
-      lastName: e.target.value
+      lastname: e.target.value
     });
   };
 
@@ -68,33 +82,20 @@ export default class SignUp extends Component {
     });
   };
 
-  onChangePassword = e => {
-    this.setState({
-      password: e.target.value
-    });
-  };
-
-  onChangeconfirmPassword = e => {
-    this.setState({
-      confirmPassword: e.target.value
-    });
-  };
   validate = () => {
     let isError = false;
     const errors = {
-      firstNameError: "",
+      firstnameError: "",
       emailError: "",
-      mobileError: "",
-      passwordError: "",
-      confirmError: ""
+      mobileError: ""
     };
 
-    if (this.state.firstName.trim() === 0) {
+    if (this.state.firstname.trim() === 0) {
       isError = true;
-      errors.firstNameError = "Username Is Required";
-    } else if (this.state.firstName.length < 3) {
+      errors.firstnameError = "Username Is Required";
+    } else if (this.state.firstname.length < 3) {
       isError = true;
-      errors.firstNameError = "Username needs to be atleast 3 characters long";
+      errors.firstnameError = "Username needs to be atleast 3 characters long";
     }
 
     if (this.state.email.trim().length === 0) {
@@ -118,27 +119,6 @@ export default class SignUp extends Component {
       errors.mobileError = "Requires Valid Mobile Number";
     }
 
-    if (this.state.password.trim().length === 0) {
-      isError = true;
-      errors.passwordError = "Password Is Required";
-    } else if (
-      !this.state.password.match(
-        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,16}$/
-      )
-    ) {
-      isError = true;
-      errors.passwordError =
-        "8 to 16 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character";
-    }
-
-    if (this.state.confirmPassword.trim().length === 0) {
-      isError = true;
-      errors.confirmError = "ConfirmPassword Is Required";
-    } else if (this.state.password !== this.state.confirmPassword) {
-      isError = true;
-      errors.confirmError = "Password Doesn't Match ";
-    }
-
     this.setState({
       ...this.state,
       ...errors
@@ -154,18 +134,19 @@ export default class SignUp extends Component {
     if (!isValid) {
       axios({
         method: "POST",
-        url: "/users/save",
+        url: "/users/update",
         data: {
-          firstName: this.state.firstName,
-          lastName: this.state.lastName,
+          firstname: this.state.firstname,
+          lastname: this.state.lastname,
           email: this.state.email,
           mobile: this.state.mobile,
-          password: this.state.password
+          token: localStorage.getItem("usertoken")
         }
       })
         .then(res => {
           this.setState({
-            message: res.data
+            message: res.data.message,
+            status: res.data.status
           });
         })
         .catch(err => {
@@ -175,34 +156,16 @@ export default class SignUp extends Component {
   };
 
   render() {
-    let {
-      firstName,
-      lastName,
-      email,
-      mobile,
-      password,
-      confirmPassword
-    } = this.state;
+    let { firstname, lastname, email, mobile } = this.state;
     let message = "";
-    if (this.state.message === "false") {
-      message = (
-        <Typography component="div">
-          <Box
-            textAlign="justify"
-            style={{ color: "white", backgroundColor: "red" }}
-          >
-            Email Id Already Exist!
-          </Box>
-        </Typography>
-      );
-    } else if (this.state.message === "true") {
+    if (this.state.status === 200) {
       message = (
         <Typography component="div">
           <Box
             textAlign="justify"
             style={{ color: "white", backgroundColor: "green" }}
           >
-            Account Created
+            Updated!
           </Box>
         </Typography>
       );
@@ -224,13 +187,13 @@ export default class SignUp extends Component {
               variant="outlined"
               margin="normal"
               fullWidth
-              id="firstName"
+              id="firstname"
               label="First Name"
-              name="firstName"
-              value={firstName}
-              onChange={this.onChangefirstName}
-              error={this.state.firstNameError ? true : false}
-              helperText={this.state.firstNameError}
+              name="firstname"
+              value={firstname}
+              onChange={this.onChangefirstname}
+              error={this.state.firstnameError ? true : false}
+              helperText={this.state.firstnameError}
             />
             <TextField
               variant="outlined"
@@ -238,9 +201,9 @@ export default class SignUp extends Component {
               fullWidth
               id="mastName"
               label="Last Name"
-              name="lastName"
-              value={lastName}
-              onChange={this.onChangelastName}
+              name="lastname"
+              value={lastname}
+              onChange={this.onChangelastname}
             />
             <TextField
               variant="outlined"
@@ -267,36 +230,6 @@ export default class SignUp extends Component {
               error={this.state.mobileError ? true : false}
               helperText={this.state.mobileError}
             />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              value={password}
-              onChange={this.onChangePassword}
-              error={this.state.passwordError ? true : false}
-              helperText={this.state.passwordError}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              name="confirmPassword"
-              label="Password"
-              type="password"
-              id="confirmPassword"
-              value={confirmPassword}
-              onChange={this.onChangeconfirmPassword}
-              error={this.state.confirmError ? true : false}
-              helperText={this.state.confirmError}
-            />
-            <FormControlLabel
-              control={<Checkbox value="Terms" color="primary" />}
-              label="Accept The Terms And Conditions"
-            />
             <Button
               type="button"
               fullWidth
@@ -304,13 +237,8 @@ export default class SignUp extends Component {
               color="primary"
               onClick={this.onSubmit}
             >
-              Sign In
+              Save
             </Button>
-            <Grid container>
-              <Grid item>
-                <Link to="/SignIn">I have an account? Sign In</Link>
-              </Grid>
-            </Grid>
           </form>
           <Box mt={8}>
             <Copyright />
