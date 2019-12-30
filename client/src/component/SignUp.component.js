@@ -285,7 +285,7 @@ export default class SignUp extends Component {
               margin="normal"
               fullWidth
               name="confirmPassword"
-              label="Password"
+              label="Confirm Password"
               type="password"
               id="confirmPassword"
               value={confirmPassword}
