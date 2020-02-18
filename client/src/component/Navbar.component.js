@@ -39,36 +39,11 @@ export default class Navbar extends Component {
       ];
     } else {
       return [
-        <li key={6} className="nav-item active">
-          <Link to="/" className="nav-link">
-            Home
-          </Link>
-        </li>,
-        <li key={7} className="nav-item active">
-          <Link to="/About" className="nav-link">
-            About
-          </Link>
-        </li>,
-        <li key={8} className="nav-item active">
-          <Link to="/SignIn" className="nav-link">
-            SignIn
-          </Link>
-        </li>,
-        <li key={9} className="nav-item active">
-          <Link to="/SignUp" className="nav-link">
-            SignUp
-          </Link>
-        </li>,
-        <li key={10} className="nav-item active">
-          <Link to="/Contact" className="nav-link">
-            Contact
-          </Link>
-        </li>,
-        <li key={11} className="nav-item active">
-          <Link to="/Help" className="nav-link">
-            Help
-          </Link>
-        </li>
+        <Nav.Link href="/">Home</Nav.Link>,
+        <Nav.Link href="/About">About</Nav.Link>,
+        <Nav.Link href="/SignIn">SignIn</Nav.Link>,
+        <Nav.Link href="/SignUp">SignUp</Nav.Link>
+          
       ];
     }
   };
@@ -94,24 +69,19 @@ export default class Navbar extends Component {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse" id="collapsibleNavId">
-          <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
-            {this.NavigationBar()}
-          </ul>
-          <form className="form-inline my-2 my-lg-0">
-            <input
-              className="form-control mr-sm-2"
-              type="text"
-              placeholder="Search"
-            />
-            <button
-              className="btn btn-outline-success my-2 my-sm-0"
-              type="submit"
-            >
-              Search
-            </button>
-          </form>
-        </div>
+        <Navbar bg="light" expand="lg">
+  <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+  <Navbar.Toggle aria-controls="basic-navbar-nav" />
+  <Navbar.Collapse id="basic-navbar-nav">
+    <Nav className="mr-auto">
+{this.NavigationBar}
+    </Nav>
+    <Form inline>
+      <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+      <Button variant="outline-success">Search</Button>
+    </Form>
+  </Navbar.Collapse>
+</Navbar>
       </nav>
     );
   }
