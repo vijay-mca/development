@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import logo from "../images/logo192.png";
 import  "@material-ui/core";
-import { Nav, Form,Form-Control, Button } from 'react-bootstrap';
+import { NavBar,Nav, Form,FormControl, Button } from 'react-bootstrap';
 export default class Navbar extends Component {
   constructor(props) {
     super(props);
