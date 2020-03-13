@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import logo from "../images/logo192.png";
-import  "@material-ui/core";
-import { NavBar,Nav, Form,FormControl, Button } from 'react-bootstrap';
-export default class Navbar extends Component {
+import { Navbar,Nav, Form,FormControl, Button } from 'reactstrap'
+
+export default class Navbars extends Component {
   constructor(props) {
     super(props);
   }
@@ -77,10 +77,6 @@ export default class Navbar extends Component {
     <Nav className="mr-auto">
 {this.NavigationBar}
     </Nav>
-    <Form inline>
-      <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-      <Button variant="outline-success">Search</Button>
-    </Form>
   </Navbar.Collapse>
 </Navbar>
       </nav>
